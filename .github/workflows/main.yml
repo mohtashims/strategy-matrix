@@ -36,4 +36,4 @@ jobs:
     steps:
       - name: Upload to JFrog
         run: |
-          echo "Uploading for the environment: ${{ matrix.envName }}"
+          echo "Uploading for the environment: $envName"
