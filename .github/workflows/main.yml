@@ -28,9 +28,10 @@ jobs:
     needs: CONSTRUCT_UPLOAD_ZIP
     runs-on: windows-latest
 
-    # strategy:
-    #   matrix:
-    #     envName: ${{fromJson(needs.CONSTRUCT_UPLOAD_ZIP.outputs.NEWENV-MATRIX)}}
+    strategy:
+      matrix:
+        envName: ${{ needs.CONSTRUCT_UPLOAD_ZIP.outputs.NEWENV-MATRIX }}
+        #envName: ${{fromJson(needs.CONSTRUCT_UPLOAD_ZIP.outputs.NEWENV-MATRIX)}}
 
 #    env:
 #      envName: ${{ matrix.envName }}
