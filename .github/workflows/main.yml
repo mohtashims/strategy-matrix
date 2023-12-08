@@ -24,7 +24,8 @@ jobs:
             Write-Host "NEW ENV LIST: $item"
           }
 
-          $newmatrix = $unique_envList -replace ' ', ','
+          #$newmatrix = $unique_envList -replace ' ', ','
+          $newmatrix = '["' + $unique_envList.Replace(' ', '","') + '"]'
           echo "newgenmatrix=$newmatrix" >> $GITHUB_ENV
 
   upload-to:
