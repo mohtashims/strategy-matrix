@@ -21,7 +21,7 @@ jobs:
             Write-Host "NEW ENV LIST: $item"
           }
 
-          $newmatrix = "[" + ($unique_envList -replace ' ', ', ') + "]"
+          $newmatrix = $unique_envList -split ' ' -join ','
           echo "newgenmatrix=$newmatrix" >> $GITHUB_ENV
 
   upload-to:
@@ -30,7 +30,7 @@ jobs:
 
     strategy:
       matrix:
-        envName: ${{fromJson(needs.CONSTRUCT_UPLOAD_ZIP.outputs.NEWENV-MATRIX)}}
+        envName: ${{ needs.CONSTRUCT_UPLOAD_ZIP.outputs.NEWENV-MATRIX }}
 
     env:
       envName: ${{ matrix.envName }}
