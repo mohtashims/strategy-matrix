@@ -28,9 +28,9 @@ jobs:
     needs: CONSTRUCT_UPLOAD_ZIP
     runs-on: windows-latest
 
-    strategy:
-      matrix:
-        envName: ${{fromJson(needs.CONSTRUCT_UPLOAD_ZIP.outputs.NEWENV-MATRIX)}}
+    # strategy:
+    #   matrix:
+    #     envName: ${{fromJson(needs.CONSTRUCT_UPLOAD_ZIP.outputs.NEWENV-MATRIX)}}
 
 #    env:
 #      envName: ${{ matrix.envName }}
@@ -38,4 +38,4 @@ jobs:
     steps:
       - name: Upload to JFrog
         run: |
-          echo "Uploading for the environment: $envName"
+          echo "Uploading for the environment: ${{ needs.CONSTRUCT_UPLOAD_ZIP.outputs.NEWENV-MATRIX }}"
