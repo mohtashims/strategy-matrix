@@ -16,12 +16,11 @@ jobs:
       - name: Construct new zip per environment
         id: newmatrixtask
         run: |
-          $unique_envList = "[item1, item2, item3]"  # Replace with your logic to get unique_envList
+          $unique_envList = "item1 item2 item3"  # Replace with your logic to get unique_envList
           $envArray = $unique_envList -split ' '
           $newmatrix = $envArray | ConvertTo-Json
-          #echo "newgenmatrix=$newmatrix" >> $env:GITHUB_OUTPUT
-          echo "newgenmatrix=$unique_envList" >> $env:GITHUB_OUTPUT
-
+          echo "NEWENV-MATRIX=$newmatrix" >> $env:GITHUB_ENV
+          echo "NEWENV-MATRIX=$newmatrix" >> $env:GITHUB_OUTPUT
 
 
   upload-to:
@@ -30,13 +29,9 @@ jobs:
 
     strategy:
       matrix:
-        envName: ${{ fromJson(needs.CONSTRUCT_UPLOAD_ZIP.outputs.NEWENV-MATRIX) }}
-        #envName: ${{fromJson(needs.CONSTRUCT_UPLOAD_ZIP.outputs.NEWENV-MATRIX)}}
-
-#    env:
-#      envName: ${{ matrix.envName }}
+        envName: ${{fromJson(needs.CONSTRUCT_UPLOAD_ZIP.outputs.NEWENV-MATRIX)}}
 
     steps:
       - name: Upload to JFrog
         run: |
-          echo "Uploading for the environment: ${{ needs.CONSTRUCT_UPLOAD_ZIP.outputs.NEWENV-MATRIX }}"
+          echo "Uploading for the environment: $envName"
