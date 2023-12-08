@@ -30,7 +30,7 @@ jobs:
 
     strategy:
       matrix:
-        envName: ${{ needs.CONSTRUCT_UPLOAD_ZIP.outputs.NEWENV-MATRIX }}
+        envName: ${{ fromJson(needs.CONSTRUCT_UPLOAD_ZIP.outputs.NEWENV-MATRIX) }}
         #envName: ${{fromJson(needs.CONSTRUCT_UPLOAD_ZIP.outputs.NEWENV-MATRIX)}}
 
 #    env:
