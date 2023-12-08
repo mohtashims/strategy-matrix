@@ -16,19 +16,11 @@ jobs:
       - name: Construct new zip per environment
         id: newmatrixtask
         run: |
-          echo "WF: ${{ github.workflow }}"
-          $myWF = "${{ github.workflow }}" -replace '\s', ''
-          echo "NWF: $myWF"
           $unique_envList = "item1 item2 item3"  # Replace with your logic to get unique_envList
-          foreach ($item in $unique_envList) {
-            Write-Host "NEW ENV LIST: $item"
-          }
-
-          #$newmatrix = $unique_envList -replace ' ', ','
-          #$newmatrix = '["' + $unique_envList.Replace(' ', '","') + '"]'
+          $envArray = $unique_envList -split ' '
           $newmatrix = $envArray | ConvertTo-Json
-          echo "newgenmatrix=$newmatrix" >> $env:GITHUB_OUTPUT
-          #echo "newgenmatrix=$newmatrix" >> $env:GITHUB_ENV
+          echo "newgenmatrix=$newmatrix" >> $env:GITHUB_ENV
+
 
   upload-to:
     needs: CONSTRUCT_UPLOAD_ZIP
