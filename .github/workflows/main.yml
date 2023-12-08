@@ -1,0 +1,41 @@
+name: Your Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  CONSTRUCT_UPLOAD_ZIP:
+    outputs:
+      NEWENV-MATRIX: ${{ steps.newmatrixtask.outputs.newgenmatrix }}
+
+    runs-on: windows-latest
+
+    steps:
+      - name: Construct new zip per environment
+        id: newmatrixtask
+        run: |
+          $unique_envList = "item1 item2 item3"  # Replace with your logic to get unique_envList
+          foreach ($item in $unique_envList) {
+            Write-Host "NEW ENV LIST: $item"
+          }
+
+          $newmatrix = "[" + $unique_envList.Replace(' ', ', ') + "]"
+          echo "newgenmatrix=$newmatrix" >> "$env:GITHUB_ENV"
+
+  upload-to:
+    needs: CONSTRUCT_UPLOAD_ZIP
+    runs-on: windows-latest
+
+    strategy:
+      matrix:
+        envName: ${{fromJson(needs.CONSTRUCT_UPLOAD_ZIP.outputs.NEWENV-MATRIX)}}
+
+    env:
+      envName: ${{ matrix.envName }}
+
+    steps:
+      - name: Upload to JFrog
+        run: |
+          echo "Uploading for environment: $env:envName"
