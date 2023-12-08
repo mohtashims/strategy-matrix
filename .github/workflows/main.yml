@@ -17,7 +17,7 @@ jobs:
         id: newmatrixtask
         run: |
           $unique_envList = "item1 item2 item3"  # Replace with your logic to get unique_envList
-          #$envArray = $unique_envList -split ' '
+          $envArray = $unique_envList -split ' '
           #$newmatrix = $envArray | ConvertTo-Json
           echo "newgenmatrix=$newmatrix" >> $env:GITHUB_OUTPUT
 
