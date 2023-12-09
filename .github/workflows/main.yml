@@ -1,37 +1,27 @@
-name: Your_Workflow - AD
-
-on:
-  push:
-    branches:
-      - main
-
+on: push
 jobs:
-  CONSTRUCT_UPLOAD_ZIP:
+  matrix:
     outputs:
-      NEWENV-MATRIX: ${{ steps.newmatrixtask.outputs.newgenmatrix }}
-
+      matrix: ${{ steps.gen-matrix.outputs.matrix }}
     runs-on: windows-latest
-
     steps:
-      - name: Construct new zip per environment
-        id: newmatrixtask
+      - id: gen-matrix
         run: |
-          $unique_envList = "item1 item2 item3"  # Replace with your logic to get unique_envList
-          $envArray = $unique_envList -split ' '
-          $newmatrix = $envArray | ConvertTo-Json
-          echo "NEWENV-MATRIX=$newmatrix" >> $env:GITHUB_ENV
-          echo "NEWENV-MATRIX=$newmatrix" >> $env:GITHUB_OUTPUT
+          $envList = "item1_pom item2 item3_xml item4_txt" -split ' '
+          $unique_envList = @()
+          foreach ($i in $envList) {
+            if ($i -like '*_*') {
+              $unique_envList += ($i -split '_')[0]
+            }
+          }
+          $matrix = ConvertTo-Json $unique_envList -Compress
+          echo "matrix=$matrix" >> "$env:GITHUB_OUTPUT"
 
-
-  upload-to:
-    needs: CONSTRUCT_UPLOAD_ZIP
+  upload:
+    needs: matrix
     runs-on: windows-latest
-
     strategy:
       matrix:
-        envName: ${{fromJson(needs.CONSTRUCT_UPLOAD_ZIP.outputs.NEWENV-MATRIX)}}
-
+        env: ${{ fromJson(needs.matrix.outputs.matrix) }}
     steps:
-      - name: Upload to JFrog
-        run: |
-          echo "Uploading for the environment: $envName"
+      - run: echo '${{ matrix.env }}'
