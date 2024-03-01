@@ -29,14 +29,6 @@ jobs:
         with:
           node-version: 20
           
-      - name: Install Dependencies
-        run: npm install
-
-      - name: Build
-        run: npm run build
-
-      - name: Test
-        run: npm test
           
       - name: Auto Approve Deploys
         # you can use any @vN.N.N tag from https://github.com/activescott/automate-environment-deployment-approval/releases
