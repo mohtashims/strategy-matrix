@@ -19,6 +19,9 @@ jobs:
 
 
   auto_approve:
+    needs: matrix
+    #runs-on: windows-latest
+    environment: ${{ matrix.environment }}  
     runs-on: ubuntu-latest
     steps:
       - name: Auto Approve Deploys
