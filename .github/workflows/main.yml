@@ -40,7 +40,7 @@ jobs:
             
           
   upload:
-    needs: matrix
+    needs: [matrix, auto_approve]
     runs-on: windows-latest
     environment: ${{ matrix.environment }}
     strategy:
