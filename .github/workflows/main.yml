@@ -20,8 +20,8 @@ jobs:
 
   auto_approve:
     needs: matrix
-    #runs-on: windows-latest
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
+    #runs-on: ubuntu-latest
     steps:
       - name: Auto Approve Deploys
         # you can use any @vN.N.N tag from https://github.com/activescott/automate-environment-deployment-approval/releases
