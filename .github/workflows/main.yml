@@ -30,6 +30,7 @@ jobs:
           github_token: ${{ secrets.GH_TOKEN_FOR_AUTO_APPROVING_DEPLOYS }}
           environment_allow_list: |
             item4
+            item3
             item1
           # The below automatically approves dependabot and anything submitted by the Github user with login "activescott"
           actor_allow_list: |
