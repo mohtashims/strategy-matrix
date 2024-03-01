@@ -38,6 +38,7 @@ jobs:
             item1
           # The below automatically approves dependabot and anything submitted by the Github user with login "activescott"
           actor_allow_list: |
+            dependabot[bot]
             mohtashims
 
             
