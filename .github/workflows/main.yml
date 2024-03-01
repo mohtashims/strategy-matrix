@@ -21,14 +21,15 @@ jobs:
   upload:
     needs: matrix
     runs-on: windows-latest
+    environment: ${{ matrix.environment }}
     strategy:
       matrix:
         environment: ${{ fromJson(needs.matrix.outputs.matrix) }}
     steps:
       - run: echo '${{ matrix.environment }}'
 
-      - name: Deploy
-        run: |
-          # Add commands to deploy to the specified environment
-        env:
-          ENVIRONMENT: ${{ matrix.environment }}      
+      # - name: Deploy
+      #   run: |
+      #     # Add commands to deploy to the specified environment
+      #   env:
+      #     ENVIRONMENT: ${{ matrix.environment }}      
