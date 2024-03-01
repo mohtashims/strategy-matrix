@@ -21,10 +21,6 @@ jobs:
   auto_approve:
     needs: matrix
     #runs-on: windows-latest
-    environment: ${{ matrix.environment }}  
-    strategy:
-      matrix:
-        environment: ${{ fromJson(needs.matrix.outputs.matrix) }}    
     runs-on: ubuntu-latest
     steps:
       - name: Auto Approve Deploys
