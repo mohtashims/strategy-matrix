@@ -1,0 +1,39 @@
+name: Redirect Inputs to File
+
+on:
+  workflow_dispatch:
+    inputs:
+      input1:
+        description: 'Input 1'
+        required: true
+        default: 'Default Value 1'
+      input2:
+        description: 'Input 2'
+        required: true
+        default: 'Default Value 2'
+      input3:
+        description: 'Input 3'
+        required: true
+        default: 'Default Value 3'
+
+jobs:
+  redirect-inputs:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Run PowerShell script
+        shell: pwsh
+        run: |
+          # Convert inputs to JSON
+          $InputData = ConvertTo-Json -InputObject ${{ toJson(github.event.inputs) }}
+
+          # Redirect inputs to a file
+          $InputData | Out-File -FilePath inputs.json
+
+          # Display the content of the file for verification
+          Get-Content -Path /tmp/inputs.json
+
+        
