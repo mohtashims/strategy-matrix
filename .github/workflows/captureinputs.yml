@@ -25,13 +25,13 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Run PowerShell script
-        shell: pwsh
+        shell: Powershell
         run: |
           # Convert inputs to JSON
           $InputData = ConvertTo-Json -InputObject ${{ toJson(github.event.inputs) }}
 
           # Redirect inputs to a file
-          $InputData | Out-File -FilePath inputs.json
+          $InputData | Out-File -FilePath /tmp/inputs.json
 
           # Display the content of the file for verification
           Get-Content -Path /tmp/inputs.json
