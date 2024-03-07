@@ -28,7 +28,9 @@ jobs:
         shell: Powershell
         run: |
           # Convert inputs to JSON
-          $InputData = ConvertTo-Json -InputObject ${{ toJson(github.event.inputs) }}
+          #$InputData = ConvertTo-Json -InputObject ${{ toJson(github.event.inputs) }}
+          # Convert inputs to JSON and store in $InputData variable
+          $InputData = ${{ toJson(github.event.inputs) }}
 
           # Redirect inputs to a file
           $InputData | Out-File -FilePath /tmp/inputs.json
