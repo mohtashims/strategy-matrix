@@ -24,6 +24,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Run PowerShell script one
+        shell: pwsh
+        run: |
+          # Convert inputs to PowerShell hashtable
+          $Inputs = $env:INPUTS_JSON | ConvertFrom-Json
+    
+          # Convert hashtable to JSON
+          $InputData = $Inputs | ConvertTo-Json
+    
+          # Redirect inputs to a file
+          $InputData | Out-File -FilePath inputs.json
+    
+          # Display the content of the file for verification
+          Get-Content -Path inputs.json
+
+
       - name: Run PowerShell script
         shell: Powershell
         run: |
