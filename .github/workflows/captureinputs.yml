@@ -34,6 +34,8 @@ jobs:
           $InputData = $Inputs | ConvertTo-Json
           Write-Host $InputData
           $InputData | Out-File -FilePath "C:\Temp\inputs.json"
+          Get-Content -Path "C:\Temp\inputs.json"
+          
         
 
       - name: Run PowerShell script to dump inputs to file
