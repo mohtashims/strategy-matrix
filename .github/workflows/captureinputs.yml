@@ -27,11 +27,9 @@ jobs:
       - name: Run PowerShell script to dump inputs to file STACK
         shell: pwsh
         run: |
-          # $Inputs = @"
-          # ${{ toJson(github.event.inputs) }}
-          # "@ | ConvertFrom-Json
-
-          $Inputs = @\"`n${{ toJson(github.event.inputs) }}`n\" | ConvertFrom-Json
+          $Inputs = @"
+          ${{ toJson(github.event.inputs) }}
+          "@ | ConvertFrom-Json
           
           $InputData = $Inputs | ConvertTo-Json
           Write-Host $InputData
@@ -52,4 +50,33 @@ jobs:
           # Display the values of variables for verification
           Write-Output "Input1: $Input1"
           Write-Output "Input2: $Input2"
-          Write-Output "Input3: $Input3"        
+          Write-Output "Input3: $Input3"  
+
+      - name: Read file and set inputs one 
+        run: |
+          inputs=$(cat C:\Temp\inputs.json | jq -r 'to_entries | map("\(.key)=\(.value|tostring)") | .[]')
+          echo "::set-env name=INPUTS::$inputs"
+
+      - name: Use inputs one
+        run: echo "Input value for key1 is ${{ github.event.inputs.input1 }}"
+
+      - name: Save JSON to file
+        run: |
+          @"
+          {
+            "input1": "mohtashim",
+            "input2": "shifa",
+            "input3": "maria"
+          }
+          "@ | Out-File -FilePath C:\Temp\input2.json -Encoding utf8    
+
+      - name: Read file and set inputs two
+        run: |
+          inputs=$(cat C:\Temp\input2.json | jq -r 'to_entries | map("\(.key)=\(.value|tostring)") | .[]')
+          echo "::set-env name=INPUTS::$inputs"
+
+      - name: Use inputs two
+        run: echo "Input value for key1 is ${{ github.event.inputs.input1 }}"          
+          
+          
+          
