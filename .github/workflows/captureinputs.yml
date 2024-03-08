@@ -28,7 +28,8 @@ jobs:
         shell: pwsh
         run: |
           # Convert inputs to PowerShell hashtable
-          $Inputs = ${{ toJson(github.event.inputs) }}  | ConvertFrom-Json
+          #$Inputs = ${{ toJson(github.event.inputs) }}  | ConvertFrom-Json
+          $Inputs = @"${{ toJson(github.event.inputs) }}"@ | ConvertFrom-Json
           #$Inputs = $env:INPUTS_JSON | ConvertFrom-Json
     
           # Convert hashtable to JSON
