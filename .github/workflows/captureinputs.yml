@@ -27,9 +27,11 @@ jobs:
       - name: Run PowerShell script to dump inputs to file STACK
         shell: pwsh
         run: |
-          $Inputs = @"
-          ${{ toJson(github.event.inputs) }}
-          "@ | ConvertFrom-Json
+          # $Inputs = @"
+          # ${{ toJson(github.event.inputs) }}
+          # "@ | ConvertFrom-Json
+
+          $Inputs = @\"`n${{ toJson(github.event.inputs) }}`n\" | ConvertFrom-Json
           
           $InputData = $Inputs | ConvertTo-Json
           Write-Host $InputData
