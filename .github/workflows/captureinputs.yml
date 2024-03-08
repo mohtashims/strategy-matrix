@@ -52,6 +52,10 @@ jobs:
           Write-Output "Input2: $Input2"
           Write-Output "Input3: $Input3"  
 
+      - name: Install jq
+        run: choco install jq -y
+        if: runner.os == 'Windows
+
       - name: Read file and set inputs one 
         run: |
           inputs=$(cat C:\Temp\inputs.json | jq -r 'to_entries | map("\(.key)=\(.value|tostring)") | .[]')
