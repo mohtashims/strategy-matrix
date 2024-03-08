@@ -33,10 +33,12 @@ jobs:
           #$Inputs = $env:INPUTS_JSON | ConvertFrom-Json
     
           # Convert hashtable to JSON
-          $InputData = $Inputs | ConvertTo-Json
+          #$InputData = $Inputs | ConvertTo-Json
     
           # Redirect inputs to a file
-          $InputData | Out-File -FilePath inputs.json
+          #$InputData | Out-File -FilePath inputs.json
+          $Inputs | Out-File -FilePath inputs.json
+
     
           # Display the content of the file for verification
           Get-Content -Path inputs.json
