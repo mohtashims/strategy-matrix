@@ -60,7 +60,7 @@ jobs:
       - name: Read file and set inputs
         shell: pwsh
         run: |
-          $inputs = Get-Content -Raw C:\Temp\inputs.json | jq -r 'to_entries | map("\(.key)=\(.value|tostring)") -join " "
+          $inputs = Get-Content -Raw C:\Temp\inputs.json | jq -r "to_entries | map(\"\(.key)=\(.value|tostring)\") -join ' '"
           Write-Host "::set-env name=INPUTS::$inputs"
 
       - name: Use inputs one
