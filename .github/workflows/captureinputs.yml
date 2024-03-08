@@ -54,7 +54,7 @@ jobs:
 
       - name: Install jq
         run: choco install jq -y
-        if: runner.os == 'Windows
+        if: runner.os == 'Windows'
 
       - name: Read file and set inputs one 
         run: |
