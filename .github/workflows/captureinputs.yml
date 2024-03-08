@@ -24,6 +24,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Run PowerShell script to dump inputs to file STACK
+        shell: pwsh
+        run: |
+          $Inputs = @"
+          ${{ toJson(github.event.inputs) }}
+          "@ | ConvertFrom-Json
+        
+
       - name: Run PowerShell script to dump inputs to file
         shell: pwsh
         run: |
