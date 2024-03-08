@@ -32,7 +32,7 @@ jobs:
           "@ | ConvertFrom-Json
           
           $InputData = $Inputs | ConvertTo-Json
-          Write-Hosts $InputData
+          Write-Host $InputData
         
 
       - name: Run PowerShell script to dump inputs to file
