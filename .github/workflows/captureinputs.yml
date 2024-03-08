@@ -30,6 +30,9 @@ jobs:
           $Inputs = @"
           ${{ toJson(github.event.inputs) }}
           "@ | ConvertFrom-Json
+          
+          $InputData = $Inputs | ConvertTo-Json
+          Write-Hosts $InputData
         
 
       - name: Run PowerShell script to dump inputs to file
