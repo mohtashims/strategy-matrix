@@ -53,13 +53,15 @@ jobs:
           Write-Output "Input3: $Input3"  
 
       - name: Install jq
-        run: choco install jq -y
-        if: runner.os == 'Windows'
-
-      - name: Read file and set inputs one 
         run: |
-          inputs=$(cat C:\Temp\inputs.json | jq -r 'to_entries | map("\(.key)=\(.value|tostring)") | .[]')
-          echo "::set-env name=INPUTS::$inputs"
+          Invoke-WebRequest -Uri "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-win64.exe" -OutFile jq.exe
+          Move-Item -Path jq.exe -Destination "$env:ProgramFiles\jq.exe"
+      
+      - name: Read file and set inputs
+        shell: pwsh
+        run: |
+          $inputs = Get-Content -Raw C:\Temp\inputs.json | jq -r 'to_entries | map("\(.key)=\(.value|tostring)") -join " "
+          Write-Host "::set-env name=INPUTS::$inputs"
 
       - name: Use inputs one
         run: echo "Input value for key1 is ${{ github.event.inputs.input1 }}"
