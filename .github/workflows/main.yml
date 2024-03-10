@@ -1,50 +1,33 @@
-name: MATRIX AUTO APPROVAL
+name: Environment Approval Workflow
 
-on: push
+on:
+  push:
+    branches:
+      - main
+
 jobs:
-
-  auto_approve:
-    #needs: conmatrix
+  deploy:
+    name: Deploy to Environments
     runs-on: windows-latest
-    steps:
-      - name: Auto Approve Deploys
-        uses: activescott/automate-environment-deployment-approval@v1.0.6
-        with:
-          github_token: ${{ secrets.GH_TOKEN_FOR_AUTO_APPROVING_DEPLOYS }}
-          environment_allow_list: |
-            item1
-            item2
-          actor_allow_list: |
-            dependabot[bot]
-            mohtashims
 
-  conmatrix:
-    needs: auto_approve  
-    outputs:
-      matrix: ${{ steps.gen-matrix.outputs.matrix }}
-    runs-on: windows-latest
     strategy:
       matrix:
-        items:
-          - item1
-          - item2
+        environment: [item1, item2]
+
     steps:
-      - id: gen-matrix
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Add steps to build and package your application
+
+      - name: Deploy to ${{ matrix.environment }} environment
         run: |
-          $matrix = ConvertTo-Json $matrix -Compress
-          echo "matrix=$matrix" >> "$env:GITHUB_OUTPUT"
+          # Add commands to deploy to the specified environment
+        env:
+          ENVIRONMENT: ${{ matrix.environment }}
 
-
-            
-          
-  upload:
-    needs: [conmatrix, auto_approve]
-    runs-on: windows-latest
-    environment: "${{ steps.set_matrix.outputs.matrix }}"
-    steps:
-      - name: Set Environment Matrix
-        id: set_matrix
-        run: echo "::set-output name=matrix::$(cat $env:GITHUB_OUTPUT)"
-      
-      - name: Display Matrix
-        run: echo "${{ steps.set_matrix.outputs.matrix }}"
+      - name: Ask for approval
+        if: matrix.environment == 'item1' || matrix.environment == 'item2'
+        run: |
+          echo "Please approve the deployment to ${{ matrix.environment }} environment."
+          # You may send notifications or perform any other approval action here
