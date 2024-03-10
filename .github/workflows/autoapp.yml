@@ -45,10 +45,10 @@ jobs:
 
   upload:
     needs: [deploy, auto_approve]
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     environment: ${{ matrix.environment }}
     strategy:
       matrix:
-        environment: ${{ fromJson(needs.matrix.outputs.matrix) }}
+        environment: ${{ fromJson(needs.deploy.outputs.matrix) }}
     steps:
       - run: echo '${{ matrix.environment }}'            
