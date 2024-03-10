@@ -42,3 +42,13 @@ jobs:
           actor_allow_list: |
             dependabot[bot]          
             mohtashims    
+
+  upload:
+    needs: [deploy, auto_approve]
+    runs-on: windows-latest
+    environment: ${{ matrix.environment }}
+    strategy:
+      matrix:
+        environment: ${{ fromJson(needs.matrix.outputs.matrix) }}
+    steps:
+      - run: echo '${{ matrix.environment }}'            
