@@ -2,20 +2,6 @@ name: MATRIX AUTO APPROVAL
 
 on: push
 jobs:
-  conmatrix:
-    outputs:
-      matrix: ${{ steps.gen-matrix.outputs.matrix }}
-    runs-on: windows-latest
-    strategy:
-      matrix:
-        items:
-          - item1
-          - item2
-    steps:
-      - id: gen-matrix
-        run: |
-          $matrix = ConvertTo-Json $matrix -Compress
-          echo "matrix=$matrix" >> "$env:GITHUB_OUTPUT"
 
   auto_approve:
     needs: conmatrix
@@ -31,6 +17,23 @@ jobs:
           actor_allow_list: |
             dependabot[bot]
             mohtashims
+
+  conmatrix:
+    outputs:
+      matrix: ${{ steps.gen-matrix.outputs.matrix }}
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        items:
+          - item1
+          - item2
+    steps:
+      - id: gen-matrix
+        run: |
+          $matrix = ConvertTo-Json $matrix -Compress
+          echo "matrix=$matrix" >> "$env:GITHUB_OUTPUT"
+
+
             
           
   upload:
