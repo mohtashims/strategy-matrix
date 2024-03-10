@@ -1,4 +1,4 @@
-name: Environment Approval Workflow
+name: NEW Environment Approval Workflow
 
 on:
   push:
