@@ -32,8 +32,10 @@ jobs:
   upload:
     needs: [conmatrix, auto_approve]
     runs-on: windows-latest
-    strategy:
-      matrix:
-        environment: ${{fromJson(needs.conmatrix.outputs.matrix)}}
     steps:
-      - run: echo '${{ matrix.environment }}'
+      - name: Set Environment Matrix
+        id: set_matrix
+        run: echo "::set-output name=matrix::$(cat $env:GITHUB_OUTPUT)"
+      
+      - name: Display Matrix
+        run: echo "${{ steps.set_matrix.outputs.matrix }}"
