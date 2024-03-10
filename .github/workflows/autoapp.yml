@@ -12,8 +12,6 @@ jobs:
     name: Deploy to Environments
     runs-on: ubuntu-latest
     needs: auto_approve
-    outputs:
-      mymatrix: ${{ matrix.environment }}
     strategy:
       matrix:
         environment: [item1, item2]
