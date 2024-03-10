@@ -1,6 +1,8 @@
+name: MATRIX AUTO APPROVAL
+
 on: push
 jobs:
-  matrix:
+  conmatrix:
     outputs:
       matrix: ${{ steps.gen-matrix.outputs.matrix }}
     runs-on: windows-latest
@@ -15,7 +17,7 @@ jobs:
 
 
   auto_approve:
-    needs: matrix
+    needs: conmatrix
     #runs-on: windows-latest
     runs-on: windows-latest
     steps:
@@ -38,12 +40,12 @@ jobs:
             
           
   upload:
-    needs: [matrix, auto_approve]
+    needs: [conmatrix, auto_approve]
     runs-on: windows-latest
     environment: ${{ matrix.environment }}
     strategy:
       matrix:
-        environment: ${{ fromJson(needs.matrix.outputs.matrix) }}
+        environment: ${{ fromJson(needs.conmatrix.outputs.matrix) }}
     steps:
       - run: echo '${{ matrix.environment }}'
 
