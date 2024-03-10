@@ -7,8 +7,9 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        item1: [item1]
-        item2: [item2]
+        items:
+          - item1
+          - item2
     steps:
       - id: gen-matrix
         run: |
