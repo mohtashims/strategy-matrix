@@ -4,18 +4,14 @@ jobs:
     outputs:
       matrix: ${{ steps.gen-matrix.outputs.matrix }}
     runs-on: windows-latest
+    strategy:
+      matrix:
+        item1: [item1]
+        item2: [item2]
     steps:
       - id: gen-matrix
-        run: |
-          $envList = "item1_pom item2 item3_xml item4_txt" -split ' '
-          $unique_envList = @()
-          foreach ($i in $envList) {
-            if ($i -like '*_*') {
-              $unique_envList += ($i -split '_')[0]
-            }
-          }
-          $matrix = ConvertTo-Json $unique_envList -Compress
-          echo "matrix=$matrix" >> "$env:GITHUB_OUTPUT"
+        run: echo "matrix=$matrix" >> "$env:GITHUB_OUTPUT"
+
 
 
   auto_approve:
@@ -37,8 +33,7 @@ jobs:
           github_token: ${{ secrets.GH_TOKEN_FOR_AUTO_APPROVING_DEPLOYS }}
           environment_allow_list: |
             item1
-            item3
-            item4
+            item2
 
           # The below automatically approves dependabot and anything submitted by the Github user with login "activescott"
           actor_allow_list: |
