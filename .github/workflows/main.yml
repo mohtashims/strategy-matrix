@@ -6,22 +6,7 @@ on:
       - main
 
 jobs:
-
-  auto_approve:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Auto Approve Deploys
-        # you can use any @vN.N.N tag from https://github.com/activescott/automate-environment-deployment-approval/releases
-        uses: activescott/automate-environment-deployment-approval@main
-        with:
-          github_token: ${{ secrets.GH_TOKEN_FOR_AUTO_APPROVING_DEPLOYS }}
-          environment_allow_list: |
-            item1
-            item2
-          # The below automatically approves dependabot and anything submitted by the Github user with login "activescott"
-          actor_allow_list: |
-            mohtashims    
-    
+ 
   deploy:
     name: Deploy to Environments
     runs-on: windows-latest
@@ -42,3 +27,17 @@ jobs:
           echo "I run post approval for ${{ matrix.environment }}"
 
 
+  auto_approve:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Auto Approve Deploys
+        # you can use any @vN.N.N tag from https://github.com/activescott/automate-environment-deployment-approval/releases
+        uses: activescott/automate-environment-deployment-approval@main
+        with:
+          github_token: ${{ secrets.GH_TOKEN_FOR_AUTO_APPROVING_DEPLOYS }}
+          environment_allow_list: |
+            item1
+            item2
+          # The below automatically approves dependabot and anything submitted by the Github user with login "activescott"
+          actor_allow_list: |
+            mohtashims    
