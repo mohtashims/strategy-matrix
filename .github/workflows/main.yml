@@ -11,7 +11,9 @@ jobs:
         item2: [item2]
     steps:
       - id: gen-matrix
-        run: echo "matrix=$matrix" >> "$env:GITHUB_OUTPUT"
+        run: |
+          $matrix = ConvertTo-Json $matrix -Compress
+          echo "matrix=$matrix" >> "$env:GITHUB_OUTPUT"
 
   auto_approve:
     needs: conmatrix
