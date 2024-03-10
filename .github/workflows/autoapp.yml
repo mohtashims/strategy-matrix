@@ -10,7 +10,7 @@ jobs:
   deploy:
     name: Deploy to Environments
     runs-on: ubuntu-latest
-    needs: auto_approve
+    #needs: auto_approve
     strategy:
       matrix:
         environment: [item1, item2]
@@ -27,6 +27,7 @@ jobs:
           echo "I run post approval for ${{ matrix.environment }}"
 
   auto_approve:
+    needs: deploy
     runs-on: ubuntu-latest
     steps:
       - name: Auto Approve Deploys
