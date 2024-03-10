@@ -45,12 +45,12 @@ jobs:
             dependabot[bot]          
             mohtashims    
 
-  upload:
-    needs: [deploy, auto_approve]
-    runs-on: ubuntu-latest
-    environment: ${{ matrix.environment }}
-    strategy:
-      matrix:
-        environment: ${{ fromJson(needs.deploy.outputs.mymatrix) }}
-    steps:
-      - run: echo '${{ matrix.environment }}'            
+  # upload:
+  #   needs: [deploy, auto_approve]
+  #   runs-on: ubuntu-latest
+  #   environment: ${{ matrix.environment }}
+  #   strategy:
+  #     matrix:
+  #       environment: ${{ fromJson(needs.deploy.outputs.mymatrix) }}
+  #   steps:
+  #     - run: echo '${{ matrix.environment }}'            
