@@ -23,12 +23,4 @@ jobs:
 
       - name: Deploy to ${{ matrix.environment }} environment
         run: |
-          # Add commands to deploy to the specified environment
-        env:
-          ENVIRONMENT: ${{ matrix.environment }}
-
-      - name: Ask for approval
-        if: matrix.environment == 'item1' || matrix.environment == 'item2'
-        run: |
-          echo "Please approve the deployment to ${{ matrix.environment }} environment."
-          # You may send notifications or perform any other approval action here
+          echo "I run post approval for ${{ matrix.environment }}"
