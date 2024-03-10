@@ -27,7 +27,7 @@ jobs:
           github_token: ${{ secrets.GH_TOKEN_FOR_AUTO_APPROVING_DEPLOYS }}
           environment_allow_list: |
             item1
-            item2
+
           actor_allow_list: |
             dependabot[bot]
             mohtashims
