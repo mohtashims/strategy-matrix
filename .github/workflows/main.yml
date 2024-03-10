@@ -4,7 +4,7 @@ on: push
 jobs:
 
   auto_approve:
-    needs: conmatrix
+    #needs: conmatrix
     runs-on: windows-latest
     steps:
       - name: Auto Approve Deploys
@@ -19,6 +19,7 @@ jobs:
             mohtashims
 
   conmatrix:
+    needs: auto_approve  
     outputs:
       matrix: ${{ steps.gen-matrix.outputs.matrix }}
     runs-on: windows-latest
