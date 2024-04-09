@@ -16,6 +16,7 @@ jobs:
 
           $EnvNamesJSONVariable = @{}
           $envList = New-Object System.Collections.ArrayList
+          $displayList = New-Object System.Collections.ArrayList
           
           $color = "hello, yellow"
           $values = $color.Split(',')
