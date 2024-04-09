@@ -33,13 +33,12 @@ jobs:
           #Write-Host "Tracker@11 - EnvNamesJSONVariable is $EnvNamesJSONVariable and Compress is $($EnvNamesJSONVariable | ConvertTo-JSON -Compress -Depth 100)" 
           #echo "ENV-MATRIX=$($EnvNamesJSONVariable | ConvertTo-JSON -Compress -Depth 100)" >> "$env:GITHUB_OUTPUT"
 
-          $EnvNamesJSONVariable = @{
-          "DISPLAYLIST" = $displayList
-          "CUSTOMENVNAME" = $envList
+          $outputData = @{
+            "DISPLAYLIST" = $displayList
+            "CUSTOMENVNAME" = $envList
           }
 
-          echo "ENV-MATRIX=$($EnvNamesJSONVariable | ConvertTo-Json -Compress -Depth 100)"  >> "$env:GITHUB_OUTPUT"
-
+          echo "ENV-MATRIX=$($outputData | ConvertTo-Json -Compress -Depth 100)" >> "$env:GITHUB_OUTPUT"
           
 
   Trigger_Service:
@@ -48,10 +47,10 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        DISPLAYLIST: ${{fromJson(needs.createloopmatrix.outputs.ENV-MATRIX.DISPLAYLIST)}}
-        CUSTOMENVNAME: ${{fromJson(needs.createloopmatrix.outputs.ENV-MATRIX.CUSTOMENVNAME)}}
+        DISPLAYLIST: ${{ needs.createloopmatrix.outputs.DISPLAYLIST }}
+        CUSTOMENVNAME: ${{ needs.createloopmatrix.outputs.CUSTOMENVNAME }}
     steps:
-      - name: Split Matrix name for use 
+      - name: Split Matrix name for use
         run: |
           Write-Host "Inside Matrix"
 
