@@ -8,9 +8,12 @@ on:
 jobs:
   createloopmatrix:
     runs-on: windows-latest
+    outputs: 
+      env-matrix: ${{ steps.set-matrix.outputs.ENV-MATRIX }}
 
     steps:
-      - name: Run PowerShell script
+      - name: Run PowerShell 
+        id: set-matrix
         shell: pwsh
         run: |
 
