@@ -42,7 +42,7 @@ jobs:
       name: ${{ matrix.customenvName }}
     runs-on: windows-latest
     strategy:
-      matrix: ${{fromJSON(needs.set-environment-matrix.outputs.ENV-MATRIX)}}
+      matrix: ${{fromJSON(needs.createloopmatrix.outputs.ENV-MATRIX)}}
       
     steps:
 
