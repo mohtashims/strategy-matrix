@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  loop:
+  createloopmatrix:
     runs-on: windows-latest
 
     steps:
@@ -34,3 +34,22 @@ jobs:
 
  
           echo "ENV-MATRIX=$($EnvNamesJSONVariable | ConvertTo-JSON -Compress -Depth 100)" >> "$env:GITHUB_OUTPUT"
+
+  Trigger_Service:
+    name: ${{ matrix.DISPLAYLIST }}
+    needs: [createloopmatrix]
+    environment: 
+      name: ${{ matrix.customenvName }}
+      url: "${{ steps.prereq.outputs.appurl }}"
+    runs-on: "${{ needs.set-global-runner.outputs.runner_name }}"
+    strategy:
+      matrix: ${{fromJSON(needs.set-environment-matrix.outputs.ENV-MATRIX)}}
+      
+
+    steps:
+
+      - name: Split Matrix name for use 
+        id: instancedetails
+        run: |
+
+          echo "Inside Matrix"        
