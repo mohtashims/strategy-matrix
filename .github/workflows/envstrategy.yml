@@ -34,7 +34,7 @@ jobs:
           echo "ENV-MATRIX=$($EnvNamesJSONVariable | ConvertTo-JSON -Compress -Depth 100)" >> "$env:GITHUB_OUTPUT"
 
   Trigger_Service:
-    name: Trigger Service
+    name: ${{ matrix.DISPLAYLIST }}
     needs: [createloopmatrix]
     runs-on: windows-latest
     strategy:
