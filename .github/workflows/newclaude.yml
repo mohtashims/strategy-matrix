@@ -1,0 +1,55 @@
+name: Loop Over Comma-Separated Values
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  createloopmatrix:
+    runs-on: windows-latest
+    outputs: 
+      MATRIX: ${{ steps.set-matrix.outputs.MATRIX }}
+      ENV-VARS: ${{ steps.set-matrix.outputs.ENV-VARS }}
+
+    steps:
+      - name: Run PowerShell 
+        id: set-matrix
+        shell: pwsh
+        run: |
+
+          $EnvNamesJSONVariable = @{}
+          $envList = New-Object System.Collections.ArrayList
+          $displayList = New-Object System.Collections.ArrayList
+          
+          $color = "hello, yellow"
+          $values = $color.Split(',')
+
+          $matrix = @()
+          $envVars = @{}
+
+          foreach ($value in $values) {
+            $matrixName = "MA_$value"
+            $matrix += @{ "DISPLAYLIST" = $matrixName; "CUSTOMENVNAME" = $value }
+            $envVars."$value" = $value
+            Write-Output "Value: $value"
+          }
+
+          echo "MATRIX=$($matrix | ConvertTo-Json -Compress -Depth 100)" >> "$env:GITHUB_OUTPUT"
+          echo "ENV-VARS=$($envVars | ConvertTo-Json -Compress -Depth 100)" >> "$env:GITHUB_OUTPUT"
+          
+
+  Trigger_Service:
+    name: ${{ matrix.DISPLAYLIST }}
+    needs: [createloopmatrix]
+    runs-on: windows-latest
+    strategy:
+      matrix: ${{ fromJson(needs.createloopmatrix.outputs.MATRIX) }}
+    env:
+      ${{ fromJson(needs.createloopmatrix.outputs.ENV-VARS) }}
+    steps:
+      - name: Split Matrix name for use
+        run: |
+          Write-Host "Inside Matrix"
+          Write-Host "Hello: ${{ env.Hello }}"
+          Write-Host "Yellow: ${{ env.Yellow }}"
