@@ -23,12 +23,19 @@ jobs:
 
           $matrix = @()
           foreach ($value in $values) {
-            $matrixName = "MA_$value"
-            $matrix += @{ "DISPLAYLIST" = $matrixName; "CUSTOMENVNAME" = $value }
+            $matrixname = "MA_$value"
+            $envList.Add($value)
+            $displayList.Add($matrixname)
             Write-Output "Value: $value"
           }
 
-          echo "MATRIX=$($matrix | ConvertTo-Json -Compress -Depth 100)" >> "$env:GITHUB_OUTPUT"
+
+          $outputData = @{
+            "DISPLAYLIST" = $displayList
+            "CUSTOMENVNAME" = $envList
+          }
+
+          echo "ENV-MATRIX=$($outputData | ConvertTo-Json -Compress -Depth 100)" >> "$env:GITHUB_OUTPUT"
           
 
   Trigger_Service:
