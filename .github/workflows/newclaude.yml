@@ -44,7 +44,8 @@ jobs:
     needs: [createloopmatrix]
     runs-on: windows-latest
     strategy:
-      matrix: ${{ fromJson(needs.createloopmatrix.outputs.MATRIX) }}
+      matrix:
+        include: ${{ fromJson(needs.createloopmatrix.outputs.MATRIX) }}
     env:
       HELLO: ${{ needs.createloopmatrix.outputs.ENV-VARS.Hello }}
       YELLOW: ${{ needs.createloopmatrix.outputs.ENV-VARS.Yellow }}
