@@ -41,20 +41,3 @@ jobs:
       - name: Split Matrix name for use
         run: |
           Write-Host "Inside Matrix"
-
-  # Trigger_Service:
-  #   name: ${{ matrix.DISPLAYLIST }}
-  #   needs: [createloopmatrix]
-  #   environment: 
-  #     name: ${{ matrix.CUSTOMENVNAME }}
-  #   runs-on: windows-latest
-  #   strategy:
-  #     matrix: ${{fromJSON(needs.createloopmatrix.outputs.ENV-MATRIX)}}
-      
-  #   steps:
-
-  #     - name: Split Matrix name for use 
-  #       run: |
-  #         Write-Host "Inside Matrix"        
-
-  
