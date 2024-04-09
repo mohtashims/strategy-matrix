@@ -21,24 +21,14 @@ jobs:
           $color = "hello, yellow"
           $values = $color.Split(',')
 
+          $matrix = @()
           foreach ($value in $values) {
-            $matrixname = "MA" + "_" + "$value"
-            $envList.Add($value)
-            $displayList.Add($matrixname)
+            $matrixName = "MA_$value"
+            $matrix += @{ "DISPLAYLIST" = $matrixName; "CUSTOMENVNAME" = $value }
             Write-Output "Value: $value"
           }
 
-          #$EnvNamesJSONVariable.Add("DISPLAYLIST",$displayList)
-          #$EnvNamesJSONVariable.Add("CUSTOMENVNAME",$envList)
-          #Write-Host "Tracker@11 - EnvNamesJSONVariable is $EnvNamesJSONVariable and Compress is $($EnvNamesJSONVariable | ConvertTo-JSON -Compress -Depth 100)" 
-          #echo "ENV-MATRIX=$($EnvNamesJSONVariable | ConvertTo-JSON -Compress -Depth 100)" >> "$env:GITHUB_OUTPUT"
-
-          $outputData = @{
-            "DISPLAYLIST" = $displayList
-            "CUSTOMENVNAME" = $envList
-          }
-
-          echo "ENV-MATRIX=$($outputData | ConvertTo-Json -Compress -Depth 100)" >> "$env:GITHUB_OUTPUT"
+          echo "MATRIX=$($matrix | ConvertTo-Json -Compress -Depth 100)" >> "$env:GITHUB_OUTPUT"
           
 
   Trigger_Service:
@@ -46,9 +36,7 @@ jobs:
     needs: [createloopmatrix]
     runs-on: windows-latest
     strategy:
-      matrix:
-        DISPLAYLIST: ${{ needs.createloopmatrix.outputs.DISPLAYLIST }}
-        CUSTOMENVNAME: ${{ needs.createloopmatrix.outputs.CUSTOMENVNAME }}
+      matrix: ${{ fromJson(needs.createloopmatrix.outputs.MATRIX) }}
     steps:
       - name: Split Matrix name for use
         run: |
