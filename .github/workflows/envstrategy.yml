@@ -1,0 +1,35 @@
+name: Loop Over Comma-Separated Values
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  loop:
+    runs-on: windows-latest
+
+    steps:
+      - name: Run PowerShell script
+        shell: pwsh
+        run: |
+
+          $EnvNamesJSONVariable = @{}
+          $envList = New-Object System.Collections.ArrayList
+          
+          $color = "hello, yellow"
+          $values = $color.Split(',')
+
+          foreach ($value in $values) {
+            $matrixname = "MA" + "_" + "$value"
+            $envList.Add($value)
+            $displayList.Add($matrixname)
+            Write-Output "Value: $value"
+          }
+
+          $EnvNamesJSONVariable.Add("DISPLAYLIST",$displayList)
+          $EnvNamesJSONVariable.Add("CUSTOMENVNAME",$envList)
+          Write-Host "Tracker@11 - EnvNamesJSONVariable is $EnvNamesJSONVariable and Compress is $($EnvNamesJSONVariable | ConvertTo-JSON -Compress -Depth 100)"
+
+ 
+          echo "ENV-MATRIX=$($EnvNamesJSONVariable | ConvertTo-JSON -Compress -Depth 100)" >> "$env:GITHUB_OUTPUT"
