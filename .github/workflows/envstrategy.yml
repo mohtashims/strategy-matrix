@@ -40,16 +40,12 @@ jobs:
     needs: [createloopmatrix]
     environment: 
       name: ${{ matrix.customenvName }}
-      url: "${{ steps.prereq.outputs.appurl }}"
-    runs-on: "${{ needs.set-global-runner.outputs.runner_name }}"
+    runs-on: windows-latest
     strategy:
       matrix: ${{fromJSON(needs.set-environment-matrix.outputs.ENV-MATRIX)}}
       
-
     steps:
 
       - name: Split Matrix name for use 
-        id: instancedetails
         run: |
-
-          echo "Inside Matrix"        
+          Write-Host "Inside Matrix"        
