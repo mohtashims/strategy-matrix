@@ -46,7 +46,8 @@ jobs:
     strategy:
       matrix: ${{ fromJson(needs.createloopmatrix.outputs.MATRIX) }}
     env:
-      ${{ fromJson(needs.createloopmatrix.outputs.ENV-VARS) }}
+      HELLO: ${{ needs.createloopmatrix.outputs.ENV-VARS.Hello }}
+      YELLOW: ${{ needs.createloopmatrix.outputs.ENV-VARS.Yellow }}
     steps:
       - name: Split Matrix name for use
         run: |
