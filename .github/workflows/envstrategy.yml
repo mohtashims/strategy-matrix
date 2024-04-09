@@ -46,9 +46,10 @@ jobs:
     needs: [createloopmatrix]
     runs-on: windows-latest
     strategy:
-      matrix:
-        DISPLAYLIST: ${{ needs.createloopmatrix.outputs.DISPLAYLIST }}
-        CUSTOMENVNAME: ${{ needs.createloopmatrix.outputs.CUSTOMENVNAME }}
+      matrix: ${{ fromJson(needs.createloopmatrix.outputs.env-matrix) }}
+        
+        #DISPLAYLIST: ${{ needs.createloopmatrix.outputs.DISPLAYLIST }}
+        #CUSTOMENVNAME: ${{ needs.createloopmatrix.outputs.CUSTOMENVNAME }}
     steps:
       - name: Split Matrix name for use
         run: |
