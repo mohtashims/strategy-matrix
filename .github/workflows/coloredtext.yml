@@ -21,10 +21,6 @@ jobs:
     name: Colorful Job WIN
     runs-on: windows-latest
 
-  colorful_job:
-    name: Colorful Job
-    runs-on: windows-latest
-
     steps:
       - name: Print colored text
         shell: pwsh
