@@ -34,4 +34,33 @@ jobs:
           Write-Host "`e[31mRed Text`e[0m"
         
           #Write-Host "This is $(Write-Host "green text" -ForegroundColor Green)"
-          #Write-Host "This is $(Write-Host "red text" -ForegroundColor Red)"    
+          #Write-Host "This is $(Write-Host "red text" -ForegroundColor Red)"
+
+
+  color_matrix:
+    runs-on: windows-latest
+    
+    strategy:
+      matrix:
+        include:
+        - name: "\e[32mGreen Strategy\e[0m"
+          description: This is the green strategy.
+        - name: "\e[33mYellow Strategy\e[0m" 
+          description: This is the yellow strategy.
+        - name: "\e[34mBlue Strategy\e[0m"
+          description: This is the blue strategy.
+        - name: "\e[35mMagenta Strategy\e[0m"
+          description: This is the magenta strategy.
+        - name: "\e[36mCyan Strategy\e[0m"
+          description: This is the cyan strategy.
+        - name: "\e[31mRed Strategy\e[0m"
+          description: This is the red strategy.
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Print Strategy Matrix
+      run: |
+        echo "Strategy Matrix:"
+        echo "Name: ${{ matrix.name }}"
+        echo "Description: ${{ matrix.description }}"          
