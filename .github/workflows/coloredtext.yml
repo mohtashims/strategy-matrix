@@ -25,5 +25,13 @@ jobs:
       - name: Print colored text
         shell: pwsh
         run: |
-          Write-Host "This is $(Write-Host "green text" -ForegroundColor Green)"
-          Write-Host "This is $(Write-Host "red text" -ForegroundColor Red)"    
+
+          Write-Host "`e[32mGreen Text`e[0m" -NoNewline
+          Write-Host "`e[33mYellow Text`e[0m" -NoNewline
+          Write-Host "`e[34mBlue Text`e[0m" -NoNewline
+          Write-Host "`e[35mMagenta Text`e[0m" -NoNewline
+          Write-Host "`e[36mCyan Text`e[0m" -NoNewline
+          Write-Host "`e[31mRed Text`e[0m"
+        
+          #Write-Host "This is $(Write-Host "green text" -ForegroundColor Green)"
+          #Write-Host "This is $(Write-Host "red text" -ForegroundColor Red)"    
