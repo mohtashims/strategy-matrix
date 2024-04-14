@@ -43,9 +43,9 @@ jobs:
     strategy:
       matrix:
         include:
-        - name: "\e[32mGreen Strategy\e[0m"
+        - name: "`e[32mGreen Strategy`e[0m"
           description: This is the green strategy.
-        - name: "\e[33mYellow Strategy\e[0m" 
+        - name: "`e[33mYellow Strategy`e[0m" 
           description: This is the yellow strategy.
         - name: "\e[34mBlue Strategy\e[0m"
           description: This is the blue strategy.
