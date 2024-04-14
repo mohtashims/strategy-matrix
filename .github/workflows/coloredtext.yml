@@ -6,8 +6,8 @@ on:
       - main
 
 jobs:
-  colorful_job:
-    name: Colorful Job
+  colorful_job_linux:
+    name: Colorful Job NONWIN
     runs-on: ubuntu-latest
 
     steps:
@@ -15,3 +15,19 @@ jobs:
         run: |
           echo -e "\e[32mThis is green text\e[0m"
           echo -e "\e[31mThis is red text\e[0m"
+
+
+  colorful_job_win:
+    name: Colorful Job WIN
+    runs-on: windows-latest
+
+  colorful_job:
+    name: Colorful Job
+    runs-on: windows-latest
+
+    steps:
+      - name: Print colored text
+        shell: pwsh
+        run: |
+          Write-Host "This is $(Write-Host "green text" -ForegroundColor Green)"
+          Write-Host "This is $(Write-Host "red text" -ForegroundColor Red)"    
