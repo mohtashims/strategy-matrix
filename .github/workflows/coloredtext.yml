@@ -1,0 +1,17 @@
+name: Colorful Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  colorful_job:
+    name: Colorful Job
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Print colored text
+        run: |
+          echo -e "\e[32mThis is green text\e[0m"
+          echo -e "\e[31mThis is red text\e[0m"
