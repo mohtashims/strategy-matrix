@@ -1,0 +1,18 @@
+on:
+  workflow_call:
+
+jobs:
+
+  Trigger_Service:
+    name: "${{ matrix.item }}"
+    outputs:
+      dbsnowgroup: '${{ steps.prereq.outputs.ssnowapp }}'
+    runs-on: "windows-latest"
+    strategy:
+      matrix:
+        item: ["item1", "item2", "item3"]
+    steps:
+      - name: Step task which prints
+        id: instancedetails
+        run: |
+          Write-Host "This is a test case for ${{ matrix.item }}"
