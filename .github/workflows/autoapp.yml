@@ -1,4 +1,4 @@
-name: NEW Environment Approval Workflow
+name: APPROVE NEW Environment Approval Workflow
 
 
 on:
@@ -42,7 +42,12 @@ jobs:
           # The below automatically approves dependabot and anything submitted by the Github user with login "activescott"
           actor_allow_list: |
             dependabot[bot]          
-            mohtashims    
+            mohtashims
+
+      - name: Sleep for sometime
+        run: |
+          sleep 50
+          echo "SLEEPING DONE NOW AWAKE"
 
   # upload:
   #   needs: [deploy, auto_approve]
