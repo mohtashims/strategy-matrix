@@ -31,23 +31,20 @@ jobs:
     #needs: deploy
     runs-on: ubuntu-latest
     steps:
-      # - name: Auto Approve Deploys
-      #   # you can use any @vN.N.N tag from https://github.com/activescott/automate-environment-deployment-approval/releases
-      #   uses: activescott/automate-environment-deployment-approval@main
-      #   with:
-      #     github_token: ${{ secrets.GH_TOKEN_FOR_AUTO_APPROVING_DEPLOYS }}
-      #     environment_allow_list: |
-      #       item1
-      #       item2
-      #     # The below automatically approves dependabot and anything submitted by the Github user with login "activescott"
-      #     actor_allow_list: |
-      #       dependabot[bot]          
-      #       mohtashims
+      - name: Auto Approve Deploys
+        # you can use any @vN.N.N tag from https://github.com/activescott/automate-environment-deployment-approval/releases
+        uses: activescott/automate-environment-deployment-approval@main
+        with:
+          github_token: ${{ secrets.GH_TOKEN_FOR_AUTO_APPROVING_DEPLOYS }}
+          environment_allow_list: |
+            item1
+            item2
+          # The below automatically approves dependabot and anything submitted by the Github user with login "activescott"
+          actor_allow_list: |
+            dependabot[bot]          
+            mohtashims
 
-      - name: Sleep for sometime
-        run: |
-          sleep 50
-          echo "SLEEPING DONE NOW AWAKE"
+
 
   # upload:
   #   needs: [deploy, auto_approve]
