@@ -1,12 +1,14 @@
+name: execute-paralell
+
 on:
-  workflow_call:
+  push:
+    branches:
+      - main
 
 jobs:
 
   Trigger_Service:
     name: "${{ matrix.item }}"
-    outputs:
-      dbsnowgroup: '${{ steps.prereq.outputs.ssnowapp }}'
     runs-on: "windows-latest"
     strategy:
       matrix:
