@@ -17,4 +17,5 @@ jobs:
       - name: Step task which prints
         id: instancedetails
         run: |
+          Start-Sleep -Seconds 15
           Write-Host "This is a test case for ${{ matrix.item }}"
