@@ -1,0 +1,22 @@
+name: description for environment
+on:
+ push:
+   branches:
+     - main
+jobs:
+ Approvals:
+   name: ${{ matrix.envName }}
+   runs-on: Windows-latest
+   strategy:
+     matrix:
+       envName:
+         - APP_APPROVAL
+         - DB_APPROVAL
+   environment:
+     name: ${{ matrix.envName }}
+     description: Environment for ${{ matrix.envName }} approval
+   steps:
+     - name: Extract Environment from SERVER_ENVIRONMENT
+       id: getenv
+       run: |
+         Write-Host "Run Success"
