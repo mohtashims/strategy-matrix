@@ -6,6 +6,7 @@ on:
 jobs:
  Approvals:
    name: ${{ matrix.envName }}
+   description: Job for approvals in different environments xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx   
    runs-on: Windows-latest
    strategy:
      matrix:
@@ -14,7 +15,6 @@ jobs:
          - DB_APPROVAL
    environment:
      name: ${{ matrix.envName }}
-     description: Environment for ${{ matrix.envName }} approval
    steps:
      - name: Extract Environment from SERVER_ENVIRONMENT
        id: getenv
