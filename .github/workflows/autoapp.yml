@@ -61,6 +61,9 @@ jobs:
         run: |
           echo "I run post approval for ${{ matrix.environment }}"
 
+      - name: Install Octokit
+        run: npm install @octokit/rest          
+
       - name: Get Environment and Approver Info
         id: get-info
         uses: actions/github-script@v6
