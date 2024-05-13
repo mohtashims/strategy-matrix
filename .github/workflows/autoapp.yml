@@ -16,7 +16,7 @@ jobs:
   #       id: get-info
   #       uses: actions/github-script@v6
   #       with:
-  #         github-token: ${{ inputs.aretoken }}
+  #         #github-token: ${{ inputs.aretoken }}
   #         retries: 3
   #         retry-exempt-status-codes: 400,401      
   #         script: |
