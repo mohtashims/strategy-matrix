@@ -89,7 +89,8 @@ jobs:
             const repo = context.repo.repo;
             const runId = context.runId;
             const endpoint = 'approvals';
-            const envuri = '${process.env.GITHUB_REPOSITORY_URL}/actions/runs/9069778616/approvals';
+            const envuri = 'https://api.github.com/mohtashims/strategy-matrix/actions/runs/9069778616/approvals';
+            
 
             octokit.request('GET ' + envuri, {})
               .then(response => {
