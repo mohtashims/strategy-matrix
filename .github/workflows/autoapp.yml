@@ -82,7 +82,7 @@ jobs:
             const { Octokit } = require("@octokit/rest");
             const nodeFetch = require("node-fetch-commonjs");
             const octokit = new Octokit({
-              auth: `token ${process.env.APP_TOKEN}`,
+              auth: `token ${process.env.ACCESS_TOKEN}`,
               request: {
                 fetch: nodeFetch
               }
