@@ -62,7 +62,9 @@ jobs:
           echo "I run post approval for ${{ matrix.environment }}"
 
       - name: Install Octokit
-        run: npm install @octokit/rest          
+        run: |
+          npm install @octokit/rest    
+          npm install node-fetch
 
       - name: Get Environment and Approver Info
         id: get-info
