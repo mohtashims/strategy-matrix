@@ -74,7 +74,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           #github-token: ${{ inputs.aretoken }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.ACCESS_TOKEN }}
           retries: 3
           retry-exempt-status-codes: 400,401      
           script: |
@@ -82,7 +82,7 @@ jobs:
             const { Octokit } = require("@octokit/rest");
             const nodeFetch = require("node-fetch-commonjs");
             const octokit = new Octokit({
-              auth: `token ${process.env.GITHUB_TOKEN}`,
+              auth: `token ${process.env.APP_TOKEN}`,
               request: {
                 fetch: nodeFetch
               }
