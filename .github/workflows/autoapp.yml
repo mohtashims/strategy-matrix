@@ -75,8 +75,15 @@ jobs:
           retries: 3
           retry-exempt-status-codes: 400,401      
           script: |
+
             const { Octokit } = require("@octokit/rest");
-            const octokit = new Octokit({ auth: `token ${process.env.GITHUB_TOKEN}` });
+            const fetch = require("node-fetch");
+            const octokit = new Octokit({
+              auth: `token ${process.env.GITHUB_TOKEN}`,
+              request: {
+                fetch
+              }
+            });
             const owner = context.repo.owner;
             const repo = context.repo.repo;
             const runId = context.runId;
