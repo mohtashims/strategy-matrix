@@ -72,42 +72,7 @@ jobs:
           script: |
 
             const octokit = new Octokit({ auth: `token ${process.env.GITHUB_TOKEN}` });
-            const owner = context.repo.owner;
-            const repo = context.repo.repo;
-            const runId = context.runId;
-            const endpoint = 'approvals';
-            const envuri = `${process.env.GITHUB_REPOSITORY_URL}/actions/runs/${runId}/${endpoint}`;
 
-            octokit.request('GET ' + envuri, {})
-              .then(response => {
-                const approvals = response.data.approvals;
-                const approverNames = approvals.map(approval => approval.user.login);
-                console.log('Approver names:', approverNames);
-              })
-              .catch(error => {
-                console.error('Error:', error);
-              });
-          
-            # const runId = "${{ inputs.runId }}";
-            # const repo = "${{ inputs.repo }}";
-            # const owner = "${{ github.event.repository.owner.login }}";
-            # const baseUri = "https://api.github.com/";
-            # const endpoint = "approvals";
-            # const envuri = '${baseUri}/repos/${owner}/${repo}/actions/runs/${runId}/${endpoint}';
-
-            # const response = await github.request('GET', envuri);
-            # const approvals = response.data;
-            # const meapproval = approvals[0];
-            # const environment = meapproval.environments[0];
-            # const environmentName = environment.name;
-            # const approverName = meapproval.user.login;
-      
-            # console.log(`Environment Name: ${environmentName}`);
-            # console.log(`Approver Name: ${approverName}`);
-
-            # // Set outputs
-            # core.setOutput('environmentName', environmentName);
-            # core.setOutput('approverName', approverName);
 
 
   auto_approve:
