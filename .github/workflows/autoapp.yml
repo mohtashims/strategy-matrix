@@ -63,8 +63,9 @@ jobs:
 
       - name: Install Octokit
         run: |
-          npm install @octokit/rest    
-          npm install node-fetch
+          npm install @octokit/rest
+          npm install node-fetch-commonjs
+          #npm install node-fetch
 
       - name: Get Environment and Approver Info
         id: get-info
@@ -77,7 +78,7 @@ jobs:
           script: |
 
             const { Octokit } = require("@octokit/rest");
-            const nodeFetch = require("node-fetch");
+            const nodeFetch = require("node-fetch-commonjs");
             const octokit = new Octokit({
               auth: `token ${process.env.GITHUB_TOKEN}`,
               request: {
