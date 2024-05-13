@@ -77,11 +77,11 @@ jobs:
           script: |
 
             const { Octokit } = require("@octokit/rest");
-            const fetch = require("node-fetch");
+            const nodeFetch = require("node-fetch");
             const octokit = new Octokit({
               auth: `token ${process.env.GITHUB_TOKEN}`,
               request: {
-                fetch
+                fetch: nodeFetch
               }
             });
             const owner = context.repo.owner;
