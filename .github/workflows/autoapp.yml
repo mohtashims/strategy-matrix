@@ -66,6 +66,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           #github-token: ${{ inputs.aretoken }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           retries: 3
           retry-exempt-status-codes: 400,401      
           script: |
