@@ -48,7 +48,9 @@ jobs:
         include: ${{ fromJson(needs.createloopmatrix.outputs.MATRIX) }}
     environment:
       name: ${{ matrix.CUSTOMENVNAME }}
-    
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      JOB_NAME: MA_yellow    
     # env:
     #   HELLO: ${{ needs.createloopmatrix.outputs.ENV-VARS.Hello }}
     #   YELLOW: ${{ needs.createloopmatrix.outputs.ENV-VARS.Yellow }}
@@ -58,3 +60,29 @@ jobs:
           Write-Host "Inside Matrix"
           Write-Host "Hello: ${{ env.Hello }}"
           Write-Host "Yellow: ${{ env.Yellow }}"
+
+          $repoOwner = "${{ github.repository_owner }}"
+          $repoName = "${{ github.event.repository.name }}"
+          $workflowId = "${{ github.workflow }}"
+          $jobName = "${{ env.JOB_NAME }}"
+
+          $headers = @{
+            "Authorization" = "token $env:GITHUB_TOKEN"
+            "Accept" = "application/vnd.github.v3+json"
+          }
+
+          $workflowRuns = Invoke-RestMethod -Uri "https://api.github.com/repos/$repoOwner/$repoName/actions/workflows/$workflowId/runs?status=queued" -Headers $headers
+          $latestRun = $workflowRuns.workflow_runs | Select-Object -First 1
+
+          $jobIds = $latestRun.jobs | Where-Object { $_.name -eq $jobName } | Select-Object -ExpandProperty id
+          if ($jobIds) {
+            foreach ($jobId in $jobIds) {
+              $approvalUrl = "https://api.github.com/repos/$repoOwner/$repoName/actions/runs/$($latestRun.id)/jobs/$jobId/rerun"
+              Invoke-RestMethod -Method Post -Uri $approvalUrl -Headers $headers
+              Write-Host "Triggered job '$jobName' in run $($latestRun.id)"
+            }
+          } else {
+            Write-Host "Job '$jobName' not found in the latest queued run."
+          }
+
+          
