@@ -71,7 +71,7 @@ jobs:
             "Accept" = "application/vnd.github.v3+json"
           }
 
-          Write-Host "workflowRuns is https://api.github.com/repos/$repoOwner/$repoName/actions/workflows/$workflowId/runs?status=queued -Headers $headers
+          Write-Host "workflowRuns is https://api.github.com/repos/$repoOwner/$repoName/actions/workflows/$workflowId/runs?status=queued -Headers $headers"
           $workflowRuns = Invoke-RestMethod -Uri "https://api.github.com/repos/$repoOwner/$repoName/actions/workflows/$workflowId/runs?status=queued" -Headers $headers
           $latestRun = $workflowRuns.workflow_runs | Select-Object -First 1
 
