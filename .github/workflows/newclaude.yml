@@ -1,4 +1,4 @@
-name: NEW Loop Over Comma-Separated Values
+name: XXX- NEW Loop Over Comma-Separated Values
 
 on:
   push:
@@ -41,7 +41,8 @@ jobs:
 
   Trigger_Service:
     name: ${{ matrix.DISPLAYLIST }}
-    needs: [createloopmatrix]
+    #needs: [createloopmatrix]
+    needs: 'MA_hello'
     runs-on: windows-latest
     strategy:
       matrix:
